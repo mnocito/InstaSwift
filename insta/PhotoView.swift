@@ -31,7 +31,7 @@ class PhotoView: UIViewController {
     var mediaInfo: JSON!
     var commentInfo: [JSON]!
     let sWidth = UIScreen.mainScreen().bounds.width
-    let accessT = "1125868065.e029fea.4a885fa430d6422098bee4975f0fdc24"
+    let accessT = "ACCESS_TOKEN"
     override func viewDidLoad() {
         super.viewDidLoad()
         captionLabel.frame = CGRectMake(captionLabel.frame.origin.x, captionLabel.frame.origin.y, sWidth, captionLabel.frame.height)

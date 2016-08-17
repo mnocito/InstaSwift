@@ -18,7 +18,7 @@ class ProfileView: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var userData: JSON!
     var pagination: String!
     var footer: UICollectionReusableView!
-    let accessToken = "1125868065.e029fea.4a885fa430d6422098bee4975f0fdc24"
+    let accessToken = "ACCESS_TOKEN"
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()

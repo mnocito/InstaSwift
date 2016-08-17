@@ -17,7 +17,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 class ViewController: UIViewController {
-    let accessT = "1125868065.e029fea.4a885fa430d6422098bee4975f0fdc24"
+    let accessT = "ACCESS_TOKEN"
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.s
