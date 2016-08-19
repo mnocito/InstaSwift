@@ -28,13 +28,15 @@ class PhotoView: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var firstComment: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     var mediaInfo: JSON!
     var commentInfo: [JSON]!
     let sWidth = UIScreen.mainScreen().bounds.width
     let accessT = "ACCESS_TOKEN"
     override func viewDidLoad() {
         super.viewDidLoad()
-        captionLabel.frame = CGRectMake(captionLabel.frame.origin.x, captionLabel.frame.origin.y, sWidth, captionLabel.frame.height)
+        self.automaticallyAdjustsScrollViewInsets = false
+        scrollView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         likesLabel.text = "\(mediaInfo["likes"]["count"].stringValue) likes"
         commentsButton.setTitle("View all \(commentInfo.count) comments", forState: UIControlState.Normal)
         nameLabel.text = mediaInfo["user"]["username"].stringValue
@@ -47,18 +49,18 @@ class PhotoView: UIViewController {
         let data = NSData(contentsOfURL: profUrl!)
         // format image
         profileView.image = UIImage(data: data!)
-        profileView.layer.borderWidth = 1
         profileView.layer.masksToBounds = false
-        profileView.layer.borderColor = UIColor.blackColor().CGColor
         profileView.layer.cornerRadius = profileView.frame.height/2
         profileView.clipsToBounds = true
         //caption stuff
-        let boldAtr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(17)]
+        let boldAtr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(15)]
+        let regAtr = [NSFontAttributeName: UIFont.systemFontOfSize(15)]
         if mediaInfo["caption"]["from"] != nil {
             let captionName = NSMutableAttributedString(string: "\(mediaInfo["caption"]["from"]["username"].stringValue) ", attributes: boldAtr)
-            let captionBody  = NSMutableAttributedString(string: mediaInfo["caption"]["text"].stringValue)
+            let captionBody  = NSMutableAttributedString(string: mediaInfo["caption"]["text"].stringValue, attributes: regAtr)
             captionName.appendAttributedString(captionBody)
             captionLabel.attributedText = captionName
+            captionLabel.preferredMaxLayoutWidth = CGFloat(sWidth - 30)
         } else {
             captionLabel.hidden = true
         }
@@ -72,30 +74,34 @@ class PhotoView: UIViewController {
             secondComment.hidden = true
             commentsButton.hidden = true
             let firstCommentName = NSMutableAttributedString(string: "\(commentInfo[0]["from"]["username"].stringValue) ", attributes: boldAtr)
-            let firstCommentBody  = NSMutableAttributedString(string: commentInfo[0]["text"].stringValue)
+            let firstCommentBody  = NSMutableAttributedString(string: commentInfo[0]["text"].stringValue, attributes: regAtr)
             firstCommentName.appendAttributedString(firstCommentBody)
             firstComment.attributedText = firstCommentName
+            captionLabel.preferredMaxLayoutWidth = CGFloat(sWidth - 30)
         case 2:
             commentsButton.hidden = true
             let boldAtr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(17)]
             let firstCommentName = NSMutableAttributedString(string: "\(commentInfo[0]["from"]["username"].stringValue) ", attributes: boldAtr)
-            let firstCommentBody  = NSMutableAttributedString(string: commentInfo[0]["text"].stringValue)
+            let firstCommentBody  = NSMutableAttributedString(string: commentInfo[0]["text"].stringValue, attributes: regAtr)
             firstCommentName.appendAttributedString(firstCommentBody)
             firstComment.attributedText = firstCommentName
             let secondCommentName = NSMutableAttributedString(string: "\(commentInfo[1]["from"]["username"].stringValue) ", attributes: boldAtr)
-            let secondCommentBody  = NSMutableAttributedString(string: commentInfo[1]["text"].stringValue)
+            let secondCommentBody  = NSMutableAttributedString(string: commentInfo[1]["text"].stringValue, attributes: regAtr)
             secondCommentName.appendAttributedString(secondCommentBody)
             secondComment.attributedText = secondCommentName
+            secondComment.preferredMaxLayoutWidth = CGFloat(sWidth - 30)
         default:
             let boldAtr = [NSFontAttributeName: UIFont.boldSystemFontOfSize(17)]
             let firstCommentName = NSMutableAttributedString(string: "\(commentInfo[commentInfo.count-2]["from"]["username"].stringValue) ", attributes: boldAtr)
             let firstCommentBody  = NSMutableAttributedString(string: commentInfo[commentInfo.count-2]["text"].stringValue)
             firstCommentName.appendAttributedString(firstCommentBody)
             firstComment.attributedText = firstCommentName
+            firstComment.preferredMaxLayoutWidth = CGFloat(sWidth - 30)
             let secondCommentName = NSMutableAttributedString(string: "\(commentInfo[commentInfo.count-1]["from"]["username"].stringValue) ", attributes: boldAtr)
             let secondCommentBody  = NSMutableAttributedString(string: commentInfo[commentInfo.count-1]["text"].stringValue)
             secondCommentName.appendAttributedString(secondCommentBody)
             secondComment.attributedText = secondCommentName
+            secondComment.preferredMaxLayoutWidth = CGFloat(sWidth - 30)
         }
         
     }

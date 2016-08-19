@@ -1,4 +1,4 @@
-//
+ //
 //  ProfileView.swift
 //  insta
 //
@@ -23,6 +23,7 @@ class ProfileView: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         self.refreshControl.addTarget(self, action: #selector(ProfileView.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.collectionView.addSubview(self.refreshControl)
         self.navigationController!.navigationBar.topItem!.title = "Back"

@@ -13,6 +13,10 @@ import Alamofire
 class CommentView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var commentInfo: [JSON]!
     var captionInfo: JSON?
+    var heights: [CGFloat] = []
+    let sWidth = UIScreen.mainScreen().bounds.width
+    var heightsLoaded = false
+    @IBOutlet weak var tableView: UITableView!
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if captionInfo != nil {
             return commentInfo.count + 1
@@ -47,13 +51,19 @@ class CommentView: UIViewController, UITableViewDelegate, UITableViewDataSource 
             cell.nameLabel.text = commentInfo![index]["from"]["username"].stringValue
             cell.commentLabel.text = commentInfo![index]["text"].stringValue
         }
+        cell.commentLabel.preferredMaxLayoutWidth = sWidth - 85
+        cell.commentLabel.numberOfLines = 0
+        cell.commentLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        print("frame: \(cell.commentLabel.frame.size.height)")
+        print("bounds: \(cell.commentLabel.bounds.height)")
+        heights.append(cell.commentLabel.frame.size.height + 10.0)
         return cell
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let bottomOffset = CGPoint(x: 0, y: tableView.contentSize.height - tableView
-            .bounds.size.height)
-        tableView.setContentOffset(bottomOffset, animated: false)
+        self.tableView.estimatedRowHeight = 100.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.contentInset = UIEdgeInsets(top: 35, left: 0, bottom: 0, right: 0)
         self.navigationController!.navigationBar.topItem!.title = "Back"
         self.tableView.tableFooterView = UIView()
         
@@ -63,14 +73,8 @@ class CommentView: UIViewController, UITableViewDelegate, UITableViewDataSource 
             self.navigationController!.pushViewController(viewcont!, animated: true)
         
     }
-    @IBOutlet weak var tableView: UITableView!
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-
-
 }

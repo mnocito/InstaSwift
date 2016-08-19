@@ -16,9 +16,7 @@ class CommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        profileImage.layer.borderWidth = 1
         profileImage.layer.masksToBounds = false
-        profileImage.layer.borderColor = UIColor.blackColor().CGColor
         profileImage.layer.cornerRadius = profileImage.frame.height/2
         profileImage.clipsToBounds = true
     }
